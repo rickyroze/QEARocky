@@ -71,7 +71,7 @@ float Ji = Jp * (50/5);
 //Best Stand up -> Lp = .11; desired_pos = 0
 //Best Spin -> Lp = .07; desired_pos = 0; error_v offset = .2
 //                  .09                                    .15
-float Lp = .11;
+float Lp = .07;
 float Li = Lp*(15/5); 
 float error_vL = 0;
 float error_vR = 0;
@@ -107,9 +107,9 @@ void updatePWMs(float totalDistanceLeft, float totalDistanceRight, float vL, flo
   error_theta = desired_theta - angleRad;
   thetaInt += (error_theta)*delta_t;
   desired_vel = (Jp * (error_theta)) + (Ji * thetaInt);
-  error_vL = ((desired_vel) - vL);
+  error_vL = ((desired_vel+.2) - vL);
   leftInt += (error_vL*delta_t);
-  error_vR = ((desired_vel) - vR);
+  error_vR = ((desired_vel-.2) - vR);
   rightInt += (error_vR*delta_t);
   leftMotorPWM = (Kp*(error_vL)) + (Ki*leftInt);/*(Jp * error_vL) + (Ji*leftInt);
   rightMotorPWM = (Jp * error_vR) + (Ji*rightInt);
